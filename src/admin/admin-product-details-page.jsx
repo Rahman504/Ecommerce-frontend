@@ -36,7 +36,7 @@ useEffect(() => {
 
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/products/${id}`)
+    axios.get(`${process.env.API_BASE_URL}/api/products/${id}`)
       .then((res) => {
         setOneProduct(res.data.product);
       })
@@ -72,7 +72,7 @@ useEffect(() => {
       cancelButtonText: "No, cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/api/products/${id}`)
+        axios.delete(`${process.env.API_BASE_URL}/api/products/${id}`)
           .then(() => {
             Swal.fire({
               title: "Deleted!",

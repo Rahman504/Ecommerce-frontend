@@ -10,7 +10,7 @@ const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
   const token = localStorage.getItem("adminToken");
 
-
+  
 
   useEffect(() => {
     const fetchAdminData = async () => {
@@ -22,7 +22,7 @@ const AdminDashboard = () => {
           return;
         }
   
-        const response = await axios.get("http://localhost:5000/api/admin/profile", {
+        const response = await axios.get(`${process.env.API_BASE_URL}/api/admin/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
   
@@ -85,7 +85,7 @@ useEffect(() => {
         const fetchProducts = async () => {
             try {
                 console.log("Fetching admin products...");
-                const response = await axios.get("http://localhost:5000/api/admin/products", {
+                const response = await axios.get(`${process.env.API_BASE_URL}/api/admin/products`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 

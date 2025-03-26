@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 const Products = () => {
     const [allproduct, setallProduct] = useState([])
     useEffect(() => {
-      fetch("http://localhost:5000/api/products", {method: "GET"})
+      fetch(`${process.env.API_BASE_URL}/api/products`, {method: "GET"})
       .then((res) => res.json())
       .then(response => {
         setallProduct(response.products)

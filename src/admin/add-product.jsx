@@ -24,7 +24,7 @@ const AddProductPage = () => {
       ...form,
       imageUrl: [form.imageUrl1, form.imageUrl2, form.imageUrl3, form.imageUrl4],
     };
-    axios.post(`http://localhost:5000/api/products`, productData, {
+    axios.post(`${process.env.API_BASE_URL}/api/products`, productData, {
       headers: {
         Authorization: `Bearer ${token}`, 
         "Content-Type": "application/json",

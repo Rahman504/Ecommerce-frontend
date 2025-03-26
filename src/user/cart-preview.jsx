@@ -28,7 +28,7 @@ const CartPreview = ({ cart, setCart }) => {
         try {
           const token = localStorage.getItem("token");
   
-          const response = await axios.delete("http://localhost:5000/api/cart/clear", {
+          const response = await axios.delete(`${process.env.API_BASE_URL}/api/cart/clear`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

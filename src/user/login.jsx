@@ -18,7 +18,7 @@ const LoginPage = ({ setIsLoggedIn, setCart }) => {
     setError(""); 
 
     try {
-      const response = await axios.post("http://localhost:5000/api/users/login", form);
+      const response = await axios.post(`${process.env.API_BASE_URL}/api/users/login`, form);
       
       
       const token = response.data.token;
@@ -33,7 +33,7 @@ const LoginPage = ({ setIsLoggedIn, setCart }) => {
       localStorage.removeItem("cart_null");
 
 
-      const cartResponse = await axios.get("http://localhost:5000/api/cart", {
+      const cartResponse = await axios.get(`${process.env.API_BASE_URL}/api/cart`, {
         headers: { Authorization: `Bearer ${token}` },
       });
   

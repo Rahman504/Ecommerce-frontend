@@ -21,7 +21,7 @@ const ProductDetails = ({ cart, setCart }) => {
 
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/products/${id}`)
+    axios.get(`${process.env.API_BASE_URL}/api/products/${id}`)
       .then((res) => {
         setOneProduct(res.data.product);
       })
@@ -83,7 +83,7 @@ const ProductDetails = ({ cart, setCart }) => {
   
     try {
       await axios.post(
-        "http://localhost:5000/api/cart/add",
+        `${process.env.API_BASE_URL}/api/cart/add`,
         { product: oneproduct._id, quantity: 1 },
     { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
