@@ -401,6 +401,7 @@ section.form textarea {
 }
 section.form form div button {
   margin-top: 10px;
+  cursor: pointer;
 }
 section.form input {
   padding-left: 10px;
