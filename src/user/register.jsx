@@ -68,22 +68,22 @@ const RegisterPage = () => {
         <div>
           <p>Password:</p>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Enter your password"
             onChange={inputChange}
             value={form.password}
-          />
-        </div>
-        <div className="checkbox">
-            <input
-              type="checkbox"
-              id="showPassword"
-              style={{ marginRight: "5px", padding: "10px" }} 
-              onChange={() => setShowPassword(!showPassword)}
             />
-            <label htmlFor="showPassword" style={{fontSize: ".8rem", fontWeight: "700", color: "#fff"}}> Show Password</label>
-          </div>
+          <div className="checkbox">
+              <input
+                type="checkbox"
+                id="showPassword"
+                style={{ marginRight: "5px", padding: "10px" }} 
+                onChange={() => setShowPassword(!showPassword)}
+              />
+              <label htmlFor="showPassword" style={{fontSize: ".8rem", fontWeight: "700", color: "#fff"}}> Show Password</label>
+            </div>
+        </div>
         {error && <p style={{ color: "red"}} className="error">{error}</p>}
 
 
