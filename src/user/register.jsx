@@ -19,7 +19,7 @@ const RegisterPage = () => {
     const formData = {
       ...form
     };
-    axios.post(`${process.env.API_BASE_URL}/api/users`, formData)
+    axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/users`, formData)
     .then(() => {
         toast.success("Account created successfully!", {
                  onClose: () => navigate("/login"),

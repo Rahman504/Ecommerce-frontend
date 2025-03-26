@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import deleteImg from "../icon-delete.svg";
 import cartImg from "../icon-cart.svg";
 
-const API_URL = `${process.env.API_BASE_URL}/api/cart`;
+const API_URL = `${process.env.REACT_APP_API_BASE_URL}/api/cart`;
 
 const Cart = ({ cart, setCart }) => {
     const navigate = useNavigate();

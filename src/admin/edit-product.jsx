@@ -18,7 +18,7 @@ const EditProductPage = () => {
   });
 
   useEffect(() => {
-    axios.get(`${process.env.API_BASE_URL}/api/products/${id}`)
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/${id}`)
       .then((res) => {
         const product = res.data.product;
         setForm({
@@ -50,7 +50,7 @@ const EditProductPage = () => {
         form.imageUrl4,
       ],
     };
-    axios.put(`${process.env.API_BASE_URL}/api/products/${id}`, updatedProductData)
+    axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/products/${id}`, updatedProductData)
       .then(() => {
         toast.success("Product updated successfully!", {
         onClose: () => navigate(`/products/${id}`),

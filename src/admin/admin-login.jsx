@@ -23,7 +23,7 @@ const AdminLoginPage = () => {
     }
   
     try {
-      const response = await axios.post(`${process.env.API_BASE_URL}/api/admin/login`, formData);
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/admin/login`, formData);
       
       const { token } = response.data;
       if (token) {

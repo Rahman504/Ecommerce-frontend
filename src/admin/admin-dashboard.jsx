@@ -22,7 +22,7 @@ const AdminDashboard = () => {
           return;
         }
   
-        const response = await axios.get(`${process.env.API_BASE_URL}/api/admin/profile`, {
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
   
@@ -85,7 +85,7 @@ useEffect(() => {
         const fetchProducts = async () => {
             try {
                 console.log("Fetching admin products...");
-                const response = await axios.get(`${process.env.API_BASE_URL}/api/admin/products`, {
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/admin/products`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
