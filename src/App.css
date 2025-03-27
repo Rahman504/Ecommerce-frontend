@@ -678,6 +678,9 @@ header div.nav article.navlink div.dropdown .button {
     width: 90%;
   }
 
+  #price {
+    font-size: .8rem;
+  }
 
   div.info {
     width: 100%;
