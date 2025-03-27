@@ -119,7 +119,7 @@ useEffect(() => {
             <p>₦ {oneproduct.discountedPrice.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
               <p>-{oneproduct.discount}%</p>
             </article>
-            <p id='price'>$ {oneproduct.price}</p>
+            <p id='price'>₦ {oneproduct.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
           </div>
           {isAdmin && isAdminPage && (
             <div className="action">

@@ -123,7 +123,7 @@ useEffect(() => {
                                 <article>
                                     <p>{product.name}</p>
                                     <p>₦ {product.discountedPrice.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                    <p id="price" style={{ marginTop: "2px" }}>$ {product.price}</p>
+                                    <p id="price" style={{ marginTop: "2px" }}>₦ {product.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                 </article>
                             </Link>   
                         </div>

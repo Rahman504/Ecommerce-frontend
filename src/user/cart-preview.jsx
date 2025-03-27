@@ -71,7 +71,7 @@ const CartPreview = ({ cart, setCart }) => {
               <img src={item.product?.imageUrl?.[0]} alt={item.product?.name} />
               <div className="details">
                 <h3>{item.product?.name}</h3>
-                <p>Price: ${item.product?.discountedPrice}</p>
+                <p>Price: ₦ {item.product?.discountedPrice.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                 <p>Quantity: {item.quantity}</p>
               </div>
             </div>

@@ -11,7 +11,7 @@ const ProductCard = ({ image, name, discountedPrice, price, id }) => {
             <p>{name}</p>
             <p>₦ {discountedPrice.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
 
-            <p id="price" style={{marginTop: "2px"}}>$ {price}</p>
+            <p id="price" style={{marginTop: "2px"}}>₦ {price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
           </article>
         </Link>   
       </div>
