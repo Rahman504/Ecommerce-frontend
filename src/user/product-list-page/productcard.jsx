@@ -9,7 +9,7 @@ const ProductCard = ({ image, name, discountedPrice, price, id }) => {
           <img src={image} alt="img" />
           <article>
             <p>{name}</p>
-            <p>&#8358 {discountedPrice.toFixed(2).toLocaleString()}</p>
+            <p>₦ {discountedPrice.toFixed(2).toLocaleString()}</p>
             <p id="price" style={{marginTop: "2px"}}>$ {price}</p>
           </article>
         </Link>   
