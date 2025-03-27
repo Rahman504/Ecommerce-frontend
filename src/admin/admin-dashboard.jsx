@@ -122,7 +122,7 @@ useEffect(() => {
                                 <img src={product.imageUrl[0]} alt={product.name} />
                                 <article>
                                     <p>{product.name}</p>
-                                    <p>$ {product.discountedPrice.toFixed(2)}</p>
+                                    <p>₦ {product.discountedPrice.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                     <p id="price" style={{ marginTop: "2px" }}>$ {product.price}</p>
                                 </article>
                             </Link>   
