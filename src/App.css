@@ -681,6 +681,9 @@ header div.nav article.navlink div.dropdown .button {
   #price-cart {
     font-size: 1rem;
   }
+  #cancel {
+    font-size: .7rem;
+  }
   div.info {
     width: 100%;
   }
