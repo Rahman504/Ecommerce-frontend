@@ -83,14 +83,13 @@ const CartPreview = ({ cart, setCart }) => {
           <article>
             <p>Subtotal:</p>
             <h3>
-              $
+            ₦
               {cart
               .reduce((total, item) => {
               const price = item.product?.discountedPrice || 0;
               const quantity = item.quantity || 0;
               return total + price * quantity;
-              }, 0)
-              .toFixed(2)}
+              }, 0).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </h3>
           </article>
           <div className="checkout-btn">
