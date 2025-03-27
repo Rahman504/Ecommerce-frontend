@@ -423,6 +423,7 @@ section.form p {
 }
 .cartsubdiv {
   width: 70%;
+  box-sizing: border-box;
 }
 .your > h2 {
   font-size: 2rem;
@@ -614,6 +615,7 @@ header div.nav article.navlink div.dropdown .button {
   .item-name {
     overflow: hidden;
     white-space: nowrap;
+    max-width: 200px;
     text-overflow: ellipsis;
   }
   div.productcard {
