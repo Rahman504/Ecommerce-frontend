@@ -147,8 +147,8 @@ const Cart = ({ cart, setCart }) => {
                   <article>
                     <p id="price-cart">₦ {item.product?.discountedPrice.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                     <article>
-                      <p id="cancel">₦ {item.product?.price.toLocaleString()}</p>
-                      <p id="percent">-{item.product?.discount || 0}%</p>
+                      <p>₦ {item.product?.price.toLocaleString()}</p>
+                      <p>-{item.product?.discount || 0}%</p>
                     </article>
                   </article>
                 </div>
