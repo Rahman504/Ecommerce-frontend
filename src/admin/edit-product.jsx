@@ -53,7 +53,7 @@ const EditProductPage = () => {
     axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/products/${id}`, updatedProductData)
       .then(() => {
         toast.success("Product updated successfully!", {
-        onClose: () => navigate(`/products/${id}`),
+        onClose: () => navigate(`/admin/products/${id}`),
         autoClose: 3000, 
         })
       })
