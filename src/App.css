@@ -6,6 +6,7 @@
 }
 body {
   background-color: hsla(230, 60%, 98%, 0.932);
+  padding-bottom: 30px;
 }
 div.home {
   width: 85%;
