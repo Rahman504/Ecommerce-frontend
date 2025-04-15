@@ -84,7 +84,7 @@ const ProductDetails = ({ cart, setCart }) => {
     try {
       await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/api/cart/add`,
-        { product: oneproduct._id },
+        { product: oneproduct._id, quantity },
     { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
       toast.success("Item added to cart successfully!");
