@@ -189,8 +189,10 @@ div.first {
   align-items: center;
   background-color: hsl(29, 98%, 53%);
   text-decoration: none;
+  width: 20%;
+  border-radius: 10px;
 }
-.back img {
+.backimg {
   width: 10%;
 }
 .product-details {
