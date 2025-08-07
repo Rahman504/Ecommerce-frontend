@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Link, useState, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { useParams, useNavigate  } from 'react-router-dom';
 import cartImg from '../icon-cart.svg';
