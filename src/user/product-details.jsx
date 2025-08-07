@@ -145,12 +145,12 @@ const ProductDetails = ({ cart, setCart }) => {
               </p>
             </>
           ) : (
-            <p id="price">
-              ₦ {oneproduct.price.toLocaleString('en-NG', {
+           <p>
+              ₦ {oneproduct.discountedPrice.toLocaleString('en-NG', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
-            </p>
+          </p>
           )}
         </div>
 
