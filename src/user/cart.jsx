@@ -136,7 +136,7 @@ const Cart = ({ cart, setCart }) => {
             <div key={item.product?._id || item._id} className="cart-item">
                 <div className="div1">
                 <Link to={`/products/${item.product?._id}`} style={{textDecoration: "none", color: "black"}}>
-                  <article style={{backgroundColor:"blue", width: "95%"}}>
+                  <article style={{width: "95%"}}>
                       <img
                         src={item.product?.imageUrl?.[0]} 
                         alt={item.product?.name}
@@ -144,7 +144,7 @@ const Cart = ({ cart, setCart }) => {
                       <h3 className="item-name">{item.product?.name}</h3>
                     </article>
                   </Link>
-                  <article style={{ width: "200px", backgroundColor: "red"}}>
+                  <article style={{ width: "200px"}}>
                     {item.product?.discount > 0 ? (
                       <>
                         <p id="price-cart">
