@@ -663,6 +663,15 @@ header div.nav article.navlink div.dropdown .button {
     display: block;
     top: 70%;
   }
+.back {
+  width: 40%;
+}
+.back > p {
+  font-size: .6rem;
+}
+.backimg {
+  width: 20%;
+}
   
 .product {
   width: 100%;
