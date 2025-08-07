@@ -26,7 +26,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-  const totalItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
+  const totalItemsInCart = cart.length;
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/admin");
 
