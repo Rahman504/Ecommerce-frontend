@@ -145,12 +145,34 @@ const Cart = ({ cart, setCart }) => {
                     </article>
                   </Link>
                   <article>
-                    <p id="price-cart">₦ {item.product?.discountedPrice.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                    <article>
-                      <p>₦ {item.product?.price.toLocaleString()}</p>
-                      <p>-{item.product?.discount || 0}%</p>
-                    </article>
+                    {item.product?.discount > 0 ? (
+                      <>
+                        <p id="price-cart">
+                          ₦ {item.product?.discountedPrice.toLocaleString('en-NG', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </p>
+                        <article>
+                          <p style={{ textDecoration: 'line-through', color: 'gray' }}>
+                            ₦ {item.product?.price.toLocaleString('en-NG', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
+                          </p>
+                          <p>-{item.product?.discount}%</p>
+                        </article>
+                      </>
+                    ) : (
+                      <p id="price-cart">
+                        ₦ {item.product?.price.toLocaleString('en-NG', {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </p>
+                    )}
                   </article>
+
                 </div>
                 <div className="div2">
                   <button onClick={() => handleRemove(item.product?._id)}>
