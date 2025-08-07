@@ -164,7 +164,7 @@ const Cart = ({ cart, setCart }) => {
                         </article>
                       </>
                     ) : (
-                      <p id="price-cart">
+                      <p id="price-cart" style={{width: "40%"}}>
                         ₦ {item.product?.price.toLocaleString('en-NG', {
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2,
