@@ -136,7 +136,7 @@ const Cart = ({ cart, setCart }) => {
             <div key={item.product?._id || item._id} className="cart-item">
                 <div className="div1">
                 <Link to={`/products/${item.product?._id}`} style={{textDecoration: "none", color: "black"}}>
-                  <article style={{backgroundColor:"blue"}}>
+                  <article style={{backgroundColor:"blue", width: "60%"}}>
                       <img
                         src={item.product?.imageUrl?.[0]} 
                         alt={item.product?.name}
