@@ -5,6 +5,7 @@ import cartImg from '../icon-cart.svg';
 import axios from 'axios';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import backImg from "../back.png"
 
 
 
@@ -104,6 +105,10 @@ const ProductDetails = ({ cart, setCart }) => {
 
   return (
     <div className='first'>
+      <Link to="/products">
+        <img src={backImg} alt="back" />
+        <p>Back to products page</p>
+      </Link>
       <div className='product-details'>
         <div className='product'>
           <div className='main-image' {...handlers}>
