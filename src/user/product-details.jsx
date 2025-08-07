@@ -105,7 +105,7 @@ const ProductDetails = ({ cart, setCart }) => {
 
   return (
     <div className='first'>
-      <Link to="/products">
+      <Link to="/products" className="back">
         <img src={backImg} alt="back" />
         <p>Back to products page</p>
       </Link>

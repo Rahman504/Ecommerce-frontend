@@ -184,6 +184,9 @@ div.first {
   width: 85%;
   margin: 150px auto;
 }
+.back {
+  display: flex;
+}
 .product-details {
   width: 100%;
   display: flex;
