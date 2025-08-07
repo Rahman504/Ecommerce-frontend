@@ -302,7 +302,7 @@ div.info div > article {
   display: flex;
   align-items: center;
 }
-div.info div > article p:nth-child(1), .price {
+div.info div > article p:nth-child(1), .prices {
   font-size: 1.3rem;
   font-weight: 700;
 }
