@@ -144,7 +144,7 @@ const Cart = ({ cart, setCart }) => {
                       <h3 className="item-name">{item.product?.name}</h3>
                     </article>
                   </Link>
-                  <article style={{ width: "70px", backgroundColor: "red"}}>
+                  <article style={{ width: "200px", backgroundColor: "red"}}>
                     {item.product?.discount > 0 ? (
                       <>
                         <p id="price-cart">
