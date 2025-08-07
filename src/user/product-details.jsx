@@ -126,12 +126,34 @@ const ProductDetails = ({ cart, setCart }) => {
         <div className='info'>
           <h1>{oneproduct.name}</h1>
           <div>
-            <article>
-              <p>₦ {oneproduct.discountedPrice.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-              <p>-{oneproduct.discount}%</p>
-            </article>
-            <p id='price'>₦ {oneproduct.price.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-          </div>
+          {oneproduct.discount > 0 ? (
+            <>
+              <article>
+                <p>
+                  ₦ {oneproduct.discountedPrice.toLocaleString('en-NG', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </p>
+                <p>-{oneproduct.discount}%</p>
+              </article>
+              <p id="price" style={{ textDecoration: 'line-through', color: 'gray' }}>
+                ₦ {oneproduct.price.toLocaleString('en-NG', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </p>
+            </>
+          ) : (
+            <p id="price">
+              ₦ {oneproduct.price.toLocaleString('en-NG', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </p>
+          )}
+        </div>
+
           <article className='add'>
             <div className='quantity-control'>
               <p onClick={decrementQuantity}>-</p>
