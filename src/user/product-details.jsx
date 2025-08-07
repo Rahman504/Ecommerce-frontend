@@ -152,7 +152,7 @@ const ProductDetails = ({ cart, setCart }) => {
               })}
           </p>
           )}
-        </div>
+          </div>
 
           <article className='add'>
             <div className='quantity-control'>
