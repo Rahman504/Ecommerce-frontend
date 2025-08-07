@@ -192,6 +192,7 @@ div.first {
   width: 20%;
   border-radius: 10px;
   padding: 10px;
+  margin-bottom: 10px;
 }
 .back > p {
   color: #fff;
