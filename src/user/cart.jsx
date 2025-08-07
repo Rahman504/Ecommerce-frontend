@@ -141,7 +141,7 @@ const Cart = ({ cart, setCart }) => {
                         src={item.product?.imageUrl?.[0]} 
                         alt={item.product?.name}
                       />
-                      <h3 className="item-name">{item.product?.name}</h3>
+                      <h3 style={{width: "30%"}}>{item.product?.name}</h3>
                     </article>
                   </Link>
                   <article style={{backgroundColor: "red", width: "40%"}}>
