@@ -78,7 +78,15 @@ const CartPreview = ({ cart, setCart }) => {
     email: localStorage.getItem("user_email") || "customer@email.com",
     amount: Math.round(subtotal * 100),
     publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
-    text: "Pay Now",
+    metadata: {
+        user_id: localStorage.getItem("user"),
+        cart_items: cart.map(item => ({
+            name: item.product.name,
+            qty: item.quantity,
+            price: item.product.discountedPrice
+        })),
+        shipping_address: shippingData
+    },
     onSuccess: (ref) => handleSuccess(ref),
     onClose: () => console.log("Closed"),
   };
