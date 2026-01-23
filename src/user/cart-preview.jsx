@@ -83,7 +83,8 @@ const CartPreview = ({ cart, setCart }) => {
         cart_items: cart.map(item => ({
             name: item.product.name,
             qty: item.quantity,
-            price: item.product.discountedPrice
+            price: item.product.discountedPrice,
+            product: item.product._id
         })),
         shipping_address: shippingData
     },
