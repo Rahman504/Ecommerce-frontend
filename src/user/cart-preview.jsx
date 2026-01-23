@@ -37,7 +37,7 @@ const CartPreview = ({ cart, setCart }) => {
     const response = await axios.post(
       `${process.env.REACT_APP_API_BASE_URL}/api/orders/verify`,
       {
-        reference: reference.reference,
+        paymentReference: reference.reference,
         cart: cart,
         shippingAddress: shippingData,
         amount: subtotal,
