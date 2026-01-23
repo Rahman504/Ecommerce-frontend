@@ -87,6 +87,7 @@ const CartPreview = ({ cart, setCart }) => {
         })),
         shipping_address: shippingData
     },
+    text: "Pay Now",
     onSuccess: (ref) => handleSuccess(ref),
     onClose: () => console.log("Closed"),
   };
