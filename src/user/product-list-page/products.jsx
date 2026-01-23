@@ -44,6 +44,7 @@ const Products = () => {
                             name={product.name}
                             discountedPrice={product.discountedPrice}
                             price={product.price}
+                            countInStock={product.countInStock}
                         />
                     ))
                 ) : (

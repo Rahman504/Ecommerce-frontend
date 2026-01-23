@@ -7,19 +7,12 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import backImg from "../back.png"
 
-
-
 const ProductDetails = ({ cart, setCart }) => {
   const { id } = useParams();
   const [oneproduct, setOneProduct] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
-  
-
-
-
-
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/products/${id}`)
@@ -45,12 +38,18 @@ const ProductDetails = ({ cart, setCart }) => {
   });
 
   const handleImageClick = (index) => setCurrentImageIndex(index);
-  const incrementQuantity = () => setQuantity((prev) => prev + 1);
+  
+  const incrementQuantity = () => {
+    if (quantity < oneproduct.countInStock) {
+      setQuantity((prev) => prev + 1);
+    } else {
+      toast.warning(`Only ${oneproduct.countInStock} items available in stock`);
+    }
+  };
+
   const decrementQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
   const handleAddToCart = async () => {
-  
-
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
     if (!token) {
@@ -65,14 +64,24 @@ const ProductDetails = ({ cart, setCart }) => {
                     });
       return;
     }
+
+    if (oneproduct.countInStock <= 0) {
+      toast.error("Sorry, this item is currently out of stock");
+      return;
+    }
     
     let storedCart = JSON.parse(localStorage.getItem(`cart_${user}`)) || [];
     const existingProduct = storedCart.find((item) => item._id === oneproduct._id);
   
     if (existingProduct) {
+      const totalQuantity = existingProduct.quantity + quantity;
+      if (totalQuantity > oneproduct.countInStock) {
+        toast.error(`You cannot add more than ${oneproduct.countInStock} of this item`);
+        return;
+      }
       storedCart = storedCart.map((item) =>
         item._id === oneproduct._id
-          ? { ...item, quantity: item.quantity + quantity }
+          ? { ...item, quantity: totalQuantity }
           : item
       );
     } else {
@@ -81,7 +90,6 @@ const ProductDetails = ({ cart, setCart }) => {
     localStorage.setItem(`cart_${user}`, JSON.stringify(storedCart));
     setCart([...storedCart]);
 
-  
     try {
       await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/api/cart/add`,
@@ -95,11 +103,7 @@ const ProductDetails = ({ cart, setCart }) => {
       toast.error(errorMessage);
       navigate("/login")
     }
-    console.log("Cart before adding:", cart);
-    console.log("Stored cart in localStorage:", JSON.parse(localStorage.getItem(`cart_${localStorage.getItem("user")}`)));
   };
-
-  
   
   if (!oneproduct) return <p>Loading...</p>;
 
@@ -130,6 +134,9 @@ const ProductDetails = ({ cart, setCart }) => {
         </div>
         <div className='info'>
           <h1>{oneproduct.name}</h1>
+          <p style={{ color: oneproduct.countInStock > 0 ? 'green' : 'red', fontWeight: 'bold' }}>
+            {oneproduct.countInStock > 0 ? `In Stock: ${oneproduct.countInStock}` : 'Out of Stock'}
+          </p>
           <div>
           {oneproduct.discount > 0 ? (
             <>
@@ -165,10 +172,13 @@ const ProductDetails = ({ cart, setCart }) => {
               <h2>{quantity}</h2>
               <p onClick={incrementQuantity}>+</p>
             </div>
-              <button onClick={handleAddToCart}>
-                <img src={cartImg} alt='cart' /> Add to Cart
+              <button 
+                onClick={handleAddToCart} 
+                disabled={oneproduct.countInStock <= 0}
+                style={{ opacity: oneproduct.countInStock <= 0 ? 0.5 : 1, cursor: oneproduct.countInStock <= 0 ? 'not-allowed' : 'pointer' }}
+              >
+                <img src={cartImg} alt='cart' /> {oneproduct.countInStock > 0 ? 'Add to Cart' : 'Sold Out'}
               </button>
-           
           </article>
         </div>
       </div>

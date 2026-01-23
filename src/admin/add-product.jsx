@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 const AddProductPage = () => {
   
   const navigate = useNavigate();
-  const [form, setForm] = useState({name: "", price: "", discount: "", imageUrl1: "", imageUrl2: "",imageUrl3: "",imageUrl4: "", description: ""})
+  const [form, setForm] = useState({name: "", price: "", discount: "", imageUrl1: "", imageUrl2: "",imageUrl3: "",imageUrl4: "", description: "", countInStock: ""});
+  const [countInStock, setCountInStock] = useState(0);
 
   const inputChange = (e) => {
     setForm({...form, [e.target.name] :e.target.value})
@@ -62,6 +63,16 @@ const AddProductPage = () => {
             name="price"
             placeholder="Enter product price"
             onChange={inputChange}
+            required
+          />
+        </div>
+        <div>
+          <p>Quantity of products:</p>
+          <input 
+            type="number" 
+            placeholder="Enter stock quantity" 
+            value={countInStock} 
+            onChange={(e) => setCountInStock(e.target.value)} 
             required
           />
         </div>
