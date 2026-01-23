@@ -1,106 +1,135 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { PaystackButton } from "react-paystack"; 
 
 const CartPreview = ({ cart, setCart }) => {
   const navigate = useNavigate();
-  if (cart.length === 0) {
-    return (
-      <div className="empty-preview">
-        <p>No items in the cart.</p>
-        <Link to="/products" className="explore">Start Shopping</Link>
-      </div>
+  const [showForm, setShowForm] = useState(false);
+  const [shippingData, setShippingData] = useState({
+    address: "",
+    city: "",
+    phone: "",
+  });
+
+  const subtotal = cart.reduce((total, item) => {
+    const price = item.product?.discountedPrice || 0;
+    const quantity = item.quantity || 0;
+    return total + price * quantity;
+  }, 0);
+
+  const isFormFilled = shippingData.address.trim() !== "" && 
+                       shippingData.city.trim() !== "" && 
+                       shippingData.phone.trim() !== "";
+
+ 
+ const handleSuccess = async (reference) => {
+  try {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("user");
+
+    if (!token) {
+      Swal.fire("Error", "You must be logged in to complete the order", "error");
+      return;
+    }
+
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_BASE_URL}/api/orders/verify`,
+      {
+        reference: reference.reference,
+        cart: cart,
+        shippingAddress: shippingData,
+        amount: subtotal,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
     );
-  }
 
+    console.log("Order Verified:", response.data);
 
-  const handleOrder = async () => {
-    Swal.fire({
-      title: "Are you sure you want to checkout?",
-      text: "You won't be able to undo this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, confirm order!",
-      cancelButtonText: "No, cancel",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          const token = localStorage.getItem("token");
-  
-          const response = await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/cart/clear`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-  
-          console.log("Cart Clear Response Data:", response.data); 
-  
-          if (response.data.message === "Cart cleared successfully!") {
-            setCart([]);
-            localStorage.removeItem(`cart_${localStorage.getItem("user")}`);
-            
-            Swal.fire({
-              title: "Order successfully placed!",
-              text: "Your order was successful",
-              icon: "success",
-              timer: 3000,
-              showConfirmButton: false,
-            }).then(() => navigate("/products"));
-          } else {
-            throw new Error("Failed to clear cart");
-          }
-        } catch (error) {
-          console.error("Error clearing cart:", error);
-          Swal.fire("Error!", "Failed to place order.", "error");
-        }
-      }
+    await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/cart/clear`, {
+      headers: { Authorization: `Bearer ${token}` },
     });
+
+    setCart([]);
+    localStorage.removeItem(`cart_${userId}`);
+
+    Swal.fire({
+      title: "Order Placed!",
+      text: "Your payment was successful.",
+      icon: "success",
+    }).then(() => {
+      navigate("/products");
+    });
+
+  } catch (error) {
+    console.error("Verification Error:", error.response || error);
+    
+    Swal.fire({
+      title: "Error!",
+      text: error.response?.data?.message || "Failed to finalize order.",
+      icon: "error",
+    });
+  }
+};
+
+  const componentProps = {
+    reference: new Date().getTime().toString(),
+    email: localStorage.getItem("user_email") || "customer@email.com",
+    amount: Math.round(subtotal * 100),
+    publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
+    text: "Pay Now",
+    onSuccess: (ref) => handleSuccess(ref),
+    onClose: () => console.log("Closed"),
   };
 
-  
-  
+  if (cart.length === 0) return <div className="empty-preview">Cart is empty.</div>;
 
   return (
     <div className="your">
-      <h2>Cart Preview</h2>
+      <h2>{showForm ? "Delivery Details" : "Cart Preview"}</h2>
       <div className="cartdiv">
         <div className="cart-items cartsubdiv">
-          {cart.map((item) => (
-            <div key={item.product?._id} className="cart-item">
-              <img src={item.product?.imageUrl?.[0]} alt={item.product?.name} />
-              <div className="details">
-                <h3>{item.product?.name}</h3>
-                <p>Price: ₦ {item.product?.discountedPrice.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                <p>Quantity: {item.quantity}</p>
+          {!showForm ? (
+            cart.map((item) => (
+              <div key={item.product?._id} className="cart-item">
+                <img src={item.product?.imageUrl?.[0]} alt={item.product?.name} />
+                <div className="details">
+                  <h3>{item.product?.name}</h3>
+                  <p>₦ {item.product?.discountedPrice.toLocaleString()}</p>
+                  <p>Qty: {item.quantity}</p>
+                </div>
               </div>
+            ))
+          ) : (
+            <div className="shipping-form">
+              <input type="text" name="address" placeholder="Address" onChange={(e) => setShippingData({...shippingData, address: e.target.value})} />
+              <input type="text" name="city" placeholder="City" onChange={(e) => setShippingData({...shippingData, city: e.target.value})} />
+              <input type="text" name="phone" placeholder="Phone" onChange={(e) => setShippingData({...shippingData, phone: e.target.value})} />
+              <button className="back-btn" onClick={() => setShowForm(false)}>Back</button>
             </div>
-          ))}
+          )}
         </div>
+
         <div className="summary">
-          <h2>Cart Summary</h2>
-          <hr />
-          <article>
-            <p>Subtotal:</p>
-            <h3>
-            ₦
-              {cart
-              .reduce((total, item) => {
-              const price = item.product?.discountedPrice || 0;
-              const quantity = item.quantity || 0;
-              return total + price * quantity;
-              }, 0).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </h3>
-          </article>
+          <h2>Summary</h2>
+          <article><p>Total:</p><h3>₦ {subtotal.toLocaleString()}</h3></article>
+          
           <div className="checkout-btn">
-            <button className="checkout" onClick={handleOrder}>Checkout</button>
+            {!showForm ? (
+              <button className="checkout" onClick={() => setShowForm(true)}>Proceed to Shipping</button>
+            ) : (
+              isFormFilled ? (
+                <PaystackButton {...componentProps} className="checkout" />
+              ) : (
+                <button className="checkout disabled-btn" disabled>Please Fill Form</button>
+              )
+            )}
           </div>      
         </div>
       </div>
-     
     </div>
   );
 };
-
 
 export default CartPreview;

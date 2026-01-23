@@ -19,6 +19,7 @@ import Swal from "sweetalert2";
 import AdminDashboard from './admin/admin-dashboard';
 import AdminRoute from './component/admin-routes';
 import AdminProductDetails from './admin/admin-product-details-page';
+import OrderHistory from './user/order-history';
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -142,14 +143,6 @@ function App() {
           <img src={logo} alt="logo" />
           {!isAdminPage && (
             <article className="navlink">
-              {!isLoggedIn ? (
-                <>
-                  <Link to="/register" className="link">Register</Link>
-                  <Link to="/login" className="link">Login</Link>
-                </>
-              ) : (
-                <button className="logout-btn" onClick={handleLogout}>Logout</button>
-              )}
               <div className="dropdown">
                 <Link to="#" className="button" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
                   Account
@@ -162,8 +155,12 @@ function App() {
                         <Link to="/login" className="links" onClick={() => setIsDropdownOpen(false)}>Login</Link>
                       </>
                     ) : (
-                      <button className="links log" onClick={handleLogout}>Logout</button>
-                    )}
+                      <>
+                        <Link to="/orders" className="links" onClick={() => setIsDropdownOpen(false)}>My Orders</Link>
+                        <button className="links log" onClick={handleLogout}>Logout</button>
+                      </>
+                      
+                      )}
                   </div>
                 )}
               </div>
@@ -185,6 +182,7 @@ function App() {
         <Route path="/login" element={<LoginPage setIsLoggedIn={setIsLoggedIn} setCart={setCart} />} />
         <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
         <Route path="/cart-preview" element={<CartPreview cart={cart}  setCart={setCart} />} />
+        <Route path="/orders" element={<OrderHistory />} />
 
         <Route
           path="/admin/login"

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import deleteImg from "../icon-delete.svg";
 import cartImg from "../icon-cart.svg";
+import backImg from "../back.png";
 
 const API_URL = `${process.env.REACT_APP_API_BASE_URL}/api/cart`;
 
@@ -127,6 +128,10 @@ const Cart = ({ cart, setCart }) => {
 
   return (
     <div className="your">
+      <Link to="/products" className="back">
+              <img src={backImg} alt="back" className='backimg'/>
+              <p>Back to products page</p>
+            </Link>
       <h2>Your Cart</h2>
       <div className="cartdiv">
         <div className="cartsubdiv">
