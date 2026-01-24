@@ -745,6 +745,37 @@ div.content {
   color: #ff8c00; 
 }
 
+
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.badge.paid { background: #e3f2fd; color: #1976d2; }
+.badge.shipped { background: #fff3e0; color: #f57c00; }
+.badge.delivered { background: #e8f5e9; color: #388e3c; }
+.badge.cancelled { background: #ffebee; color: #d32f2f; }
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.admin-table th, .admin-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+
+
+
+
+
 @media (max-width: 600px) {
   .order-card-header {
     flex-direction: column;

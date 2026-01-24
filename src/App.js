@@ -20,6 +20,7 @@ import AdminDashboard from './admin/admin-dashboard';
 import AdminRoute from './component/admin-routes';
 import AdminProductDetails from './admin/admin-product-details-page';
 import OrderHistory from './user/order-history';
+import AdminOrdersPage from './admin/admin-order-page';
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -27,7 +28,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-  const totalItemsInCart = cart.length;
+const totalItemsInCart = cart.filter(item => item && item.product && item.product._id).length; 
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/admin");
 
@@ -221,6 +222,14 @@ function App() {
           element={
             <AdminRoute>
               <AdminProductDetails cart={cart} setCart={setCart}/>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/orders"
+          element={
+            <AdminRoute>
+              <AdminOrdersPage />
             </AdminRoute>
           }
         />

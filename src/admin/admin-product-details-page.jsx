@@ -4,6 +4,7 @@ import { useParams, useNavigate, Link, useLocation  } from 'react-router-dom';
 import axios from 'axios';
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
+import backImg from "../back.png"
 
 
 
@@ -93,6 +94,10 @@ useEffect(() => {
 
   return (
     <div className='first'>
+      <Link to="/admin/dashboard" className="back">
+              <img src={backImg} alt="back" className='backimg'/>
+              <p>Back to admin dashboard</p>
+            </Link>
       <div className='product-details'>
         <div className='product'>
           <div className='main-image' {...handlers}>
@@ -114,6 +119,9 @@ useEffect(() => {
         </div>
         <div className='info'>
           <h1>{oneproduct.name}</h1>
+           <p style={{ color: oneproduct.countInStock > 0 ? 'green' : 'red', fontWeight: 'bold' }}>
+            {oneproduct.countInStock > 0 ? `In Stock: ${oneproduct.countInStock}` : 'Out of Stock'}
+          </p>
           <div>
           {oneproduct.discount > 0 ? (
             <>

@@ -49,19 +49,20 @@ const ProductDetails = ({ cart, setCart }) => {
 
   const decrementQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
-  const handleAddToCart = async () => {
+ const handleAddToCart = async () => {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
+
     if (!token) {
       toast.error("Oops, you need to be logged in to add product to cart", {
-                      onClose: () => {
-                        localStorage.removeItem(`cart_${user}`);
-                        localStorage.removeItem("token");
-                        localStorage.removeItem("user");
-                        navigate("/login");
-                      },
-                      autoClose: 3000, 
-                    });
+        onClose: () => {
+          localStorage.removeItem(`cart_${user}`);
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          navigate("/login");
+        },
+        autoClose: 3000,
+      });
       return;
     }
 
@@ -69,39 +70,41 @@ const ProductDetails = ({ cart, setCart }) => {
       toast.error("Sorry, this item is currently out of stock");
       return;
     }
-    
+
+    // 1. Get current cart and match the structure: { product: {...}, quantity: n }
     let storedCart = JSON.parse(localStorage.getItem(`cart_${user}`)) || [];
-    const existingProduct = storedCart.find((item) => item._id === oneproduct._id);
-  
-    if (existingProduct) {
-      const totalQuantity = existingProduct.quantity + quantity;
+    const existingIndex = storedCart.findIndex(
+      (item) => item.product?._id === oneproduct._id
+    );
+
+    if (existingIndex !== -1) {
+      const totalQuantity = storedCart[existingIndex].quantity + quantity;
       if (totalQuantity > oneproduct.countInStock) {
         toast.error(`You cannot add more than ${oneproduct.countInStock} of this item`);
         return;
       }
-      storedCart = storedCart.map((item) =>
-        item._id === oneproduct._id
-          ? { ...item, quantity: totalQuantity }
-          : item
-      );
+      storedCart[existingIndex].quantity = totalQuantity;
     } else {
-      storedCart.push({ ...oneproduct, quantity });
+      // Push using the nested structure your components expect
+      storedCart.push({ product: oneproduct, quantity });
     }
-    localStorage.setItem(`cart_${user}`, JSON.stringify(storedCart));
-    setCart([...storedCart]);
 
+    // 2. Update Local State and LocalStorage IMMEDIATELY
+    localStorage.setItem(`cart_${user}`, JSON.stringify(storedCart));
+    setCart([...storedCart]); 
+
+    // 3. Sync with Backend
     try {
       await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/api/cart/add`,
         { product: oneproduct._id, quantity },
-    { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       toast.success("Item added to cart successfully!");
     } catch (error) {
-      const errorMessage = error.response?.data?.message || JSON.stringify(error.response?.data) || error.message;
+      const errorMessage = error.response?.data?.message || error.message;
       console.error("Error adding to cart:", errorMessage);
-      toast.error(errorMessage);
-      navigate("/login")
+      toast.error("Sync failed, but item saved locally.");
     }
   };
   

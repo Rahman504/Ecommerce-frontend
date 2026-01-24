@@ -15,6 +15,7 @@ const EditProductPage = () => {
     imageUrl4: "",
     discount: "",
     description: "",
+    countInStock: ""
   });
 
   useEffect(() => {
@@ -29,7 +30,8 @@ const EditProductPage = () => {
           imageUrl3: product.imageUrl[2] || "",
           imageUrl4: product.imageUrl[3] || "",
           description: product.description,
-          discount: product.discount
+          discount: product.discount,
+          countInStock: product.countInStock
         });
       })
       .catch((err) => console.log(err));
@@ -41,8 +43,12 @@ const EditProductPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     const updatedProductData = {
       ...form,
+      price: Number(form.price),
+      discount: Number(form.discount),
+      countInStock: Number(form.countInStock), 
       imageUrl: [
         form.imageUrl1,
         form.imageUrl2,
@@ -50,15 +56,17 @@ const EditProductPage = () => {
         form.imageUrl4,
       ],
     };
+
     axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/products/${id}`, updatedProductData)
-      .then(() => {
+      .then((res) => {
         toast.success("Product updated successfully!", {
-        onClose: () => navigate(`/admin/products/${id}`),
-        autoClose: 3000, 
-        })
+          onClose: () => navigate(`/admin/products/${id}`),
+          autoClose: 2000, 
+        });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
+        toast.error("Failed to update product.");
       });
   };
 
@@ -85,6 +93,17 @@ const EditProductPage = () => {
             placeholder="Enter product price"
             value={form.price}
             onChange={inputChange}
+            required
+          />
+        </div>
+        <div>
+          <p>Quantity of products:</p>
+          <input 
+            type="number" 
+            name="countInStock"
+            placeholder="Enter stock quantity" 
+            value={form.countInStock} 
+            onChange={inputChange} 
             required
           />
         </div>
