@@ -504,6 +504,9 @@ section.form p {
 .div1 {
   justify-content: space-between;
 }
+.div1 article:nth-child(1) {
+  align-items: center;
+}
 .div1 article:nth-child(1) h3 {
   margin-left: 20px;
 }
