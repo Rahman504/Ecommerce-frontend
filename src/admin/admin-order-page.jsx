@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import backImg from "../../src/back.png";
 
 const AdminOrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -12,30 +14,41 @@ const AdminOrdersPage = () => {
 
   const fetchOrders = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("adminToken");
+      if (!token) {
+        toast.error("No authentication token found. Please login.");
+        setLoading(false);
+        return;
+      }
+
       const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/orders/admin/all`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       setOrders(res.data);
       setLoading(false);
     } catch (err) {
-      toast.error("Failed to fetch orders");
+      const message = err.response?.data?.message || "Failed to fetch orders";
+      toast.error(message);
       setLoading(false);
     }
   };
 
   const handleStatusUpdate = async (orderId, newStatus) => {
     try {
-      const token = localStorage.getItem("token");
-      await axios.put(
+      const token = localStorage.getItem("adminToken");
+      const response = await axios.put(
         `${process.env.REACT_APP_API_BASE_URL}/api/orders/${orderId}/status`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      toast.success(`Order marked as ${newStatus}`);
-      fetchOrders(); // Refresh the list
+
+      if (response.status === 200) {
+        toast.success(`Order marked as ${newStatus}`);
+        await fetchOrders();
+      }
     } catch (err) {
-      toast.error("Error updating status");
+      toast.error(err.response?.data?.message || "Error updating status");
     }
   };
 
@@ -43,6 +56,10 @@ const AdminOrdersPage = () => {
 
   return (
     <div className="admin-orders-container">
+      <Link to="/admin/dashboard" className="back">
+        <img src={backImg} alt="back" className="backimg" />
+        <p>Back to Admin Dashboard</p>
+      </Link>
       <h2>Order Management</h2>
       <table className="admin-table">
         <thead>
@@ -72,8 +89,11 @@ const AdminOrdersPage = () => {
               </td>
               <td>₦{order.totalPrice.toLocaleString()}</td>
               <td>
-                <span className={`badge ${order.status.toLowerCase()}`}>
-                  {order.status}
+                <span 
+                  className={`badge ${order.status ? order.status.toLowerCase() : 'pending'}`}
+                  style={{ color: 'white', fontWeight: 'bold' }} 
+                >
+                  {order.status || 'Paid'}
                 </span>
               </td>
               <td>

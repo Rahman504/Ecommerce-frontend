@@ -111,6 +111,11 @@ useEffect(() => {
             <p>Add new product</p>
         </div>
       </Link>
+      <Link to={"/admin/orders"} >
+        <div className=''>
+            <p>View orders</p>
+        </div>
+      </Link>
       <h1>My Products</h1>
       <div className="all-products">
                 {products.length === 0 ? (

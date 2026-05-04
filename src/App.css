@@ -767,11 +767,24 @@ div.content {
   font-weight: bold;
 }
 
-.badge.paid { background: #e3f2fd; color: #1976d2; }
-.badge.shipped { background: #fff3e0; color: #f57c00; }
-.badge.delivered { background: #e8f5e9; color: #388e3c; }
-.badge.cancelled { background: #ffebee; color: #d32f2f; }
+.badge.paid { background: #ffc107; color: black; }
+.badge.shipped { background: #17a2b8; color: white; }
+.badge.delivered { background: #28a745; color: white; }
+.badge.cancelled { background: #dc3545; color: white; }
 
+.admin-orders-container {
+  position: absolute;
+  width: 90%;
+  margin: auto;
+  top: 150px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.badge.paid { background-color: #28a745; color: white; }
+.badge.shipped { background-color: #007bff; color: white; }
+.badge.cancelled { background-color: #dc3545; color: white; }
+.badge.pending { background-color: #ffc107; color: black; }
 .admin-table {
   width: 100%;
   border-collapse: collapse;

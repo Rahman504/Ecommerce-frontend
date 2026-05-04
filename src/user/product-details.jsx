@@ -71,7 +71,6 @@ const ProductDetails = ({ cart, setCart }) => {
       return;
     }
 
-    // 1. Get current cart and match the structure: { product: {...}, quantity: n }
     let storedCart = JSON.parse(localStorage.getItem(`cart_${user}`)) || [];
     const existingIndex = storedCart.findIndex(
       (item) => item.product?._id === oneproduct._id
@@ -85,15 +84,12 @@ const ProductDetails = ({ cart, setCart }) => {
       }
       storedCart[existingIndex].quantity = totalQuantity;
     } else {
-      // Push using the nested structure your components expect
       storedCart.push({ product: oneproduct, quantity });
     }
 
-    // 2. Update Local State and LocalStorage IMMEDIATELY
     localStorage.setItem(`cart_${user}`, JSON.stringify(storedCart));
     setCart([...storedCart]); 
 
-    // 3. Sync with Backend
     try {
       await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/api/cart/add`,
